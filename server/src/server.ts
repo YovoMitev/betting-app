@@ -27,7 +27,6 @@ const port = NODE_PORT || 3000;
 const whitelist = CORS_DOMAINS?.split(',').map((item) => item.trim());
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
-    console.log('ORIGIN', { origin, whitelist });
     if (!origin || whitelist?.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
