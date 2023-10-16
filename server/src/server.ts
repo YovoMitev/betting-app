@@ -1,8 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import session from 'express-session';
+import passport from './config/passport';
 import cors, { CorsOptions } from 'cors';
 import { PrismaClient } from '@prisma/client';
-import { NODE_PORT, CORS_DOMAINS } from './config/environment';
+import { NODE_PORT, CORS_DOMAINS, SESSION_SECRET } from './config/environment';
 import appRouter from './router';
 
 const app = express();
@@ -38,6 +40,10 @@ const corsOptions: CorsOptions = {
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
+app.use(
+  session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/api', appRouter);
-
 app.listen(port, () => console.info(`Server is running on port ${port}! 🚀`));
