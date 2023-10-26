@@ -50,7 +50,6 @@ export const authenticate = async ({
     if (encryptedPassword !== user.password) {
       return null;
     }
-
     return user;
   } catch (err) {
     console.error(
